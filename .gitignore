@@ -1,0 +1,4 @@
+.vagrant
+logs/*.log
+logs/*_log*
+oracle/*.deb
