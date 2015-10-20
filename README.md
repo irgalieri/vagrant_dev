@@ -69,8 +69,25 @@ GPL-3.0
 --with-png-dir
 ```
 * Xdebug
+* PHP ZIP Extension
+* Composer
 
 ## Usage
-
-## TODO
-* Update usage documentation
+* Clone this repository
+```bash
+$> git clone git@github.com:irgalieri/vagrant_dev.git
+```
+* Enter in the repository folder
+```bash
+$> cd vagrant_dev
+```
+* Run Vagrant up
+```bash
+$> vagrant up
+```
+* Test enter to http://127.0.0.1:8888/index.php
+* To login into VM run:
+```bash
+$> vagrant ssh
+```
+* clone your favourite repository into public and enjoy the ride

@@ -31,8 +31,8 @@ cat << 'EOF' >> httpd.conf
     ServerRoot /usr/local/apache2
     DocumentRoot /var/www/html
 
-    User daemon
-    Group daemon
+    User vagrant
+    Group vagrant
 
     <IfModule prefork.c>
     ServerLimit        512
@@ -2249,9 +2249,67 @@ sudo pecl install xdebug
 a=$(find / -name xdebug.so)
 echo zend_extension=$a >> /usr/local/php/php_5.6.14/lib/php.ini
 
+# installing zip
+sudo pecl install zip
+b=$(find / -name zip.so)
+echo extension=$b >> /usr/local/php/php_5.6.14/lib/php.ini
+
+# restart setting apache
+
+apt-get -y install rcconf
+
+cat << 'EOF' >> /etc/init.d/apache2
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          apache2
+# Required-Start:    $local_fs $remote_fs $network $syslog $named
+# Required-Stop:     $local_fs $remote_fs $network $syslog $named
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# X-Interactive:     true
+# Short-Description: Start/stop apache2 web server
+# Description:       Start the web server and associated helpers
+#  This script will start apache2, and possibly all associated instances.
+#  Moreover, it will set-up temporary directories and helper tools such as
+#  htcacheclean when required by the configuration.
+### END INIT INFO
+case "$1" in
+start)
+echo "Starting Apache ..."
+# Change the location to your specific location
+/usr/local/apache2/bin/apachectl start
+;;
+stop)
+echo "Stopping Apache ..."
+# Change the location to your specific location
+/usr/local/apache2/bin/apachectl stop
+;;
+graceful)
+echo "Restarting Apache gracefully..."
+# Change the location to your specific location
+/usr/local/apache2/bin/apachectl graceful
+;;
+restart)
+echo "Restarting Apache ..."
+# Change the location to your specific location
+/usr/local/apache2/bin/apachectl restart
+;;
+*)
+echo "Usage: '$0' {start|stop|restart|graceful}" >&2
+exit 64
+;;
+esac
+exit 0
+EOF
+
+chmod u+x /etc/init.d/apache2
+
+update-rc.d apache2 defaults
+
 ## start service
 locale-gen UTF-8
 /etc/init.d/snmpd restart
-/usr/local/apache2/bin/apachectl start
+/etc/init.d/apache2 start
 
-# restart setting apache
+## add composer
+curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
