@@ -2254,6 +2254,19 @@ sudo pecl install zip
 b=$(find / -name zip.so)
 echo extension=$b >> /usr/local/php/php_5.6.14/lib/php.ini
 
+# installing mencached
+cd /tmp
+apt-get -y install memcached libmemcached-dev
+wget https://pecl.php.net/get/memcached-2.2.0.tgz
+tar zxvf memcached-2.2.0.tgz
+cd memcached-2.2.0/
+phpize
+./configure
+make
+make install
+c=$(find / -name memcached.so | grep php)
+echo extension=$c >> /usr/local/php/php_5.6.14/lib/php.ini
+
 # restart setting apache
 
 apt-get -y install rcconf

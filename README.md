@@ -71,6 +71,8 @@ GPL-3.0
 * Xdebug
 * PHP ZIP Extension
 * Composer
+* Memcached
+* PHP Memcached Extension
 
 ## Usage
 * Clone this repository
