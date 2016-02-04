@@ -113,7 +113,7 @@ cd admin
 cat << 'EOF' >> tnsnames.ora
 ORCL =
  (DESCRIPTION =
-  (ADDRESS = (PROTOCOL = TCP)(HOST = dblcoracle01.bsas.intraway.com)(PORT = 1521))
+  (ADDRESS = (PROTOCOL = TCP)(HOST = uoracledba002v.campillo.intraway.com)(PORT = 1521))
   (CONNECT_DATA =
     (SERVER = DEDICATED)
     (SERVICE_NAME = orcl)
