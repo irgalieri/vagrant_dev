@@ -1,13 +1,19 @@
-# Vagrant Development PHP
+Vagrant Development PHP
+=======================
+
 This my personal development environment
 
-## License
+License
+-------
+
 GPL-3.0
 
-## Content
-* Oracle Instant Client 11.2
-* Apache 2.2.29
-* PHP 5.6.18 Compile like this:
+Content
+-------
+
+-	Oracle Instant Client 11.2
+-	Apache 2.2.29
+-	PHP 5.6.18 Compile like this:
 
 ```bash
 ./configure \
@@ -68,35 +74,48 @@ GPL-3.0
 --with-jpeg-dir \
 --with-png-dir
 ```
-* Xdebug
-* PHP ZIP Extension
-* Composer
-* Memcached
-* PHP Memcached Extension
-* LDAP Extension
-* OCI8 Extension
-* MySQL Server
 
-## MYSQL Server
-* user = root
-* password = vagrant
+-	Xdebug
+-	PHP ZIP Extension
+-	Composer
+-	Memcached
+-	PHP Memcached Extension
+-	LDAP Extension
+-	OCI8 Extension
+-	MySQL Server
 
-## Usage
-* Clone this repository
+MYSQL Server
+------------
+
+-	user = root
+-	password = vagrant
+
+Usage
+-----
+
+-	Clone this repository
+
 ```bash
 $> git clone git@github.com:irgalieri/vagrant_dev.git
 ```
-* Enter in the repository folder
+
+-	Enter in the repository folder
+
 ```bash
 $> cd vagrant_dev
 ```
-* Run Vagrant up
+
+-	Run Vagrant up
+
 ```bash
 $> vagrant up
 ```
-* Test enter to http://127.0.0.1:8888/index.php
-* To login into VM run:
+
+-	Test enter to http://127.0.0.1:8888/index.php
+-	To login into VM run:
+
 ```bash
 $> vagrant ssh
 ```
-* clone your favourite repository into public and enjoy the ride
+
+-	clone your favourite repository into public and enjoy the ride
