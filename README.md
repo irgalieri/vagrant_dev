@@ -1,5 +1,5 @@
 # Vagrant Development PHP
-This my personal development enviroment
+This my personal development environment
 
 ## License
 GPL-3.0
@@ -7,7 +7,7 @@ GPL-3.0
 ## Content
 * Oracle Instant Client 11.2
 * Apache 2.2.29
-* PHP 5.6.14 Compile like this:
+* PHP 5.6.18 Compile like this:
 
 ```bash
 ./configure \
@@ -73,6 +73,13 @@ GPL-3.0
 * Composer
 * Memcached
 * PHP Memcached Extension
+* LDAP Extension
+* OCI8 Extension
+* MySQL Server
+
+## MYSQL Server
+* user = root
+* password = vagrant
 
 ## Usage
 * Clone this repository

@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 apt-get update
-apt-get -y install zlib1g-dev openssl libssl-dev
+apt-get -y install zlib1g-dev openssl libssl-dev libldap-2.4-2 libldap2-dev
+
+ln -fs /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/
 
 # installing apache
 cd /tmp
@@ -113,7 +115,7 @@ cd admin
 cat << 'EOF' >> tnsnames.ora
 ORCL =
  (DESCRIPTION =
-  (ADDRESS = (PROTOCOL = TCP)(HOST = uoracledba002v.campillo.intraway.com)(PORT = 1521))
+  (ADDRESS = (PROTOCOL = TCP)(HOST = uoracledba003v.campillo.intraway.com)(PORT = 1521))
   (CONNECT_DATA =
     (SERVER = DEDICATED)
     (SERVICE_NAME = orcl)
@@ -177,13 +179,13 @@ echo '. /etc/profile.d/oracle.sh' >> /usr/local/apache2/bin/envvars
 apt-get -y install libxml2-dev libc6-dev libcurl4-gnutls-dev curl libgd2-xpm-dev libmcrypt-dev libmcrypt4 libreadline6-dev libsnmp-dev libsnmp30 bison libxslt1-dev libfreetype6 snmp snmpd
 
 cd /tmp
-wget http://php.net/get/php-5.6.14.tar.gz/from/this/mirror
-mv mirror php-5.6.14.tar.gz
-tar -zxvf php-5.6.14.tar.gz
-cd php-5.6.14/
+wget http://php.net/get/php-5.6.18.tar.gz/from/this/mirror
+mv mirror php-5.6.18.tar.gz
+tar -zxvf php-5.6.18.tar.gz
+cd php-5.6.18/
 
 ./configure \
---prefix=/usr/local/php/php_5.6.14 \
+--prefix=/usr/local/php/php_5.6.18 \
 --with-apxs2=/usr/local/apache2/bin/apxs \
 --disable-all \
 --enable-session \
@@ -242,7 +244,7 @@ cd php-5.6.14/
 
 make
 make install
-cat << 'EOF' >> /usr/local/php/php_5.6.14/lib/php.ini
+cat << 'EOF' >> /usr/local/php/php_5.6.18/lib/php.ini
 [PHP]
 
 ;;;;;;;;;;;;;;;;;;;
@@ -2240,19 +2242,19 @@ ldap.max_links = -1
 ; End:
 
 EOF
-cp /usr/local/apache2/modules/libphp5.so /usr/local/php/php_5.6.14/modules
-ln -s /usr/local/php/php_5.6.14/bin/* /usr/bin/
+cp /usr/local/apache2/modules/libphp5.so /usr/local/php/php_5.6.18/modules
+ln -s /usr/local/php/php_5.6.18/bin/* /usr/bin/
 
 # installing xdebug
 sudo apt-get -y install autoconf
 sudo pecl install xdebug
 a=$(find / -name xdebug.so)
-echo zend_extension=$a >> /usr/local/php/php_5.6.14/lib/php.ini
+echo zend_extension=$a >> /usr/local/php/php_5.6.18/lib/php.ini
 
 # installing zip
 sudo pecl install zip
 b=$(find / -name zip.so)
-echo extension=$b >> /usr/local/php/php_5.6.14/lib/php.ini
+echo extension=$b >> /usr/local/php/php_5.6.18/lib/php.ini
 
 # installing mencached
 cd /tmp
@@ -2265,7 +2267,17 @@ phpize
 make
 make install
 c=$(find / -name memcached.so | grep php)
-echo extension=$c >> /usr/local/php/php_5.6.14/lib/php.ini
+echo extension=$c >> /usr/local/php/php_5.6.18/lib/php.ini
+
+# installing ldap
+cd /tmp/php-5.6.18/ext/ldap
+phpize
+./configure --with-ldap=shared
+make
+make install
+d=$(find / -name ldap.so | grep extensions)
+echo extension=$d >> /usr/local/php/php_5.6.18/lib/php.ini
+
 
 # restart setting apache
 
@@ -2326,3 +2338,8 @@ locale-gen UTF-8
 
 ## add composer
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+
+## installing mysql
+debconf-set-selections <<< 'mysql-server mysql-server/root_password password vagrant'
+debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password vagrant'
+apt-get -y install mysql-server
