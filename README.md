@@ -11,7 +11,7 @@ GPL-3.0
 
 ```bash
 ./configure \
---prefix=/usr/local/php/php_5.6.14 \
+--prefix=/usr/local/php/php_5.6.18 \
 --with-apxs2=/usr/local/apache2/bin/apxs \
 --disable-all \
 --enable-session \
