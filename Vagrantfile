@@ -9,4 +9,7 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder "./public", "/var/www/html"
   config.vm.synced_folder "./logs", "/var/log/apache2"
   config.vm.provision :shell, :path => "./bootstrap.sh"
+  config.vm.provider :virtualbox do |vmUBU|
+     vmUBU.customize ['modifyvm', :id,'--memory', '2048']
+  end
 end

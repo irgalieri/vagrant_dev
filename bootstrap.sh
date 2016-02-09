@@ -240,7 +240,8 @@ cd php-5.6.18/
 --with-gd \
 --with-freetype-dir \
 --with-jpeg-dir \
---with-png-dir
+--with-png-dir \
+--enable-intl
 
 make
 make install
